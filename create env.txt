@@ -1,0 +1,1 @@
+conda create -n pet_happiness_env python=3.6
