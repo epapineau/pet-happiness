@@ -22,7 +22,7 @@ CREATE TABLE country_id (
 CREATE TABLE pet_population (
     pet_id INT REFERENCES pet_id(pet_id),
     country_id INT REFERENCES country_id(country_id),
-    population INT
+    pet_population INT
 );
 
 CREATE TABLE world_bank_2017 (

@@ -1,4 +1,4 @@
-﻿pet_id,Pet,country_id,Country,Population
+﻿pet_id,Pet,country_id,Country,Pet_Population
 1,Dog,207,USA,69929000
 1,Dog,37,China,27400000
 1,Dog,168,Russia,12520000
