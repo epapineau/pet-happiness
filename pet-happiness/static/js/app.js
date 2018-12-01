@@ -3,23 +3,25 @@ function examplePetPlot() {
   var url = "/get_pet_data";
 
   d3.json(url).then(function(petData) {    
+    var dog = petData['dog'];
+
     // Parse response
-    var countries = petData.country;
-    var happinessScore = petData.happiness_score;
-    var happinessRank = petData.happiness_rank;
-    var perCapitaGdp = petData.per_capita_gdp;
-    var percUrbanPop = petData.percent_urban_pop;
-    var petPopulation = petData.pet_population;
-    var petYype = petData.pet_type;
-    var population = petData.population;
-    var worldBankCode = petData.world_bank_code;
+    var countries = dog.country;
+    var happinessScore = dog.happiness_score;
+    var happinessRank = dog.happiness_rank;
+    var perCapitaGdp = dog.per_capita_gdp;
+    var percUrbanPop = dog.percent_urban_pop;
+    var petPopulation = dog.pet_population;
+    var petYype = dog.pet_type;
+    var population = dog.population;
+    var worldBankCode = dog.world_bank_code;
 
     // Console log variables
     console.log("Full data dictionary:")
     console.log(petData)
     console.log("------------------------------")
     console.log("Example of accessing specific column")
-    console.log(countries);
+    console.log(petData['bird']);
 
     // Traces
     var graphObj = {"type": "bar",
@@ -43,16 +45,16 @@ function examplePetPlot() {
 }
 examplePetPlot();
 
-// function exampleWbPlot() {
-//   /* data route */
-//   var url = "/get_wb_data";
+function exampleWbPlot() {
+  /* data route */
+  var url = "/get_wb_data";
 
-//   // d3.json(url).then(function(worldData) {
-//   //   // Parse response
-//   //   var countries = worldData.country;
-//   //   console.log(countries);
+  d3.json(url).then(function(worldData) {
+    // Parse response
+    var countries = worldData;
+    console.log(worldData);
 
-//   //   // Plots go here
-//   // });
-//   }
-// exampleWbPlot();
+    // Plots go here
+  });
+  }
+exampleWbPlot();
