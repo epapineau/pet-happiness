@@ -1,0 +1,80 @@
+Pet,Country,Population,GDP(US Billion Dollar)
+Dog,USA,69929000,19362.13
+Dog,China,27400000,11937.56
+Dog,Russia,12520000,1469.34
+Dog,Japan,12000000,4884.49
+Dog,Philippines,11600000,313.6
+Dog,India,10200000,2439.01
+Dog,Argentina,9200000,637.6
+Dog,UK,9000000,2565.05
+Dog,France,7570000,2574.81
+Dog,South Africa,7400000,349.4
+Dog,Poland,7311000,
+Dog,Italy,7000000,1921.14
+Dog,Germany,5300000,3651.87
+Dog,Ethiopia,5000000,80.56
+Dog,Spain,4720000,1307.17
+Dog,Romania,4166000,211.8
+Dog,Australia,3700000,1390.15
+Dog,Czech Republic,3152000,215.7
+Dog,Hungary,2856000,139.1
+Cat,USA,74059000,19362.13
+Cat,China,53100000,11937.56
+Cat,Russia,17800000,1469.34
+Cat,Brazil,12466000,2080.92
+Cat,France,11480000,2583
+Cat,Germany,8200000,3651.87
+Cat,UK,8000000,2565.05
+Cat,Italy,7400000,1921.14
+Cat,Ukraine,7350000,112.2
+Cat,Japan,7300000,4884.49
+Cat,Poland,5550000,
+Cat,Romania,3891000,211.8
+Cat,Spain,3385000,1307.17
+Cat,Argentina,3000000,637.6
+Cat,Netherlands,2877000,824.48
+Cat,Hungary,2240000,139.1
+Cat,Australia,2200000,1390.15
+Cat,South Africa,2000000,349.4
+Cat,Belgium,1884100,492.7
+Cat,Czech Republic,1750000,215.7
+Bird,Brazil,191001000,2080.92
+Bird,Italy,13000000,1921.14
+Bird,USA,8300000,19362.13
+Bird,Australia,7800000,1390.15
+Bird,France,6200000,2583
+Bird,Netherlands,4490000,824.48
+Bird,Spain,3718000,1307.17
+Bird,Germany,3500000,3651.87
+Bird,Russia,2800000,1469.34
+Bird,Belgium,2700000,492.7
+Bird,Poland,1300000,
+Bird,UK,1000000,2565.05
+Bird,Greece,980000,200.3
+Bird,Portugal,640000,217.6
+Bird,New Zealand,527000,205.9
+Bird,Hungary,445000,139.1
+Bird,Switzerland,383000,678.9
+Bird,Sweden,322000,538
+Bird,Austria,281000,416.6
+Bird,Romania,264000,211.8
+Fish,USA,57750000,19362.13
+Fish,France,37300000,2583
+Fish,Brazil,26500000,2080.92
+Fish,Australia,20500000,1390.15
+Fish,UK,20000000,2565.05
+Fish,Germany,2000000,3651.87
+Fish,New Zealand,1678000,205.9
+Fish,Italy,1540000,1921.14
+Fish,Russia,770000,1469.34
+Fish,Netherlands,708000,824.48
+Fish,Sweden,262000,538
+Fish,Poland,231000,
+Fish,Spain,170000,1307.17
+Fish,Switzerland,169000,678.9
+Fish,Belgium,146000,492.7
+Fish,Romania,96000,211.8
+Fish,Portugal,74000,217.6
+Fish,Austria,71000,416.6
+Fish,Hungary,58000,139.1
+Fish,Greece,38000,200.3
