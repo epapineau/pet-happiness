@@ -26,7 +26,7 @@ var scatter_chart = svg.append("g")
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Import data from the CSV file and execute everything below
-d3.csv("assets/data/data.csv", function(err, data) {
+d3.csv("assets/data/dog_data.csv", function(err, data) {
   if (err) throw err;
  
  // Step 1: Parse Data
