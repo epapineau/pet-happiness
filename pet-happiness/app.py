@@ -50,38 +50,26 @@ def get_pet_data():
     for col in list(petData.columns.values):
         queryDict[col] = [x for x in petData[col]]
 
-    # # Gather data in plotly friendly format
-    # graphObj = [{
-    #     "type": "bar",
-    #     "x": petCountry,
-    #     "y": petPop,
-    # },
-    # {
-    #     "type": "bar",
-    #     "x": happinessCountry,
-    #     "y": happinessScore
-    # }]
-
     return jsonify(queryDict)
 
-# Route to get all world bank country data
-@app.route("/get_wb_data")
-def get_wb_data():
-    # Query for all world happiness data
-    q = "SELECT * FROM happiness_data\
-        NATURAL JOIN country_id\
-        INNER JOIN world_bank_2017 ON happiness_data.country_id = world_bank_2017.country_id"
+# # Route to get all world bank country data
+# @app.route("/get_wb_data")
+# def get_wb_data():
+#     # Query for all world happiness data
+#     q = "SELECT * FROM happiness_data\
+#         NATURAL JOIN country_id\
+#         INNER JOIN world_bank_2017 ON happiness_data.country_id = world_bank_2017.country_id"
 
-    # Send query, clean response
-    worldData = pd.read_sql(q, engine)
-    worldData = worldData.drop("country_id", axis = 1)
+#     # Send query, clean response
+#     worldData = pd.read_sql(q, engine)
+#     worldData = worldData.drop("country_id", axis = 1)
 
-    # Transform to dictionary
-    worldDict = {}
-    for col in list(worldData.columns.values):
-        worldDict[col] = [x for x in worldData[col]]
+#     # Transform to dictionary
+#     worldDict = {}
+#     for col in list(worldData.columns.values):
+#         worldDict[col] = [x for x in worldData[col]]
 
-    return jsonify(worldDict)
+#     return jsonify(worldDict)
 
 if __name__ == "__main__":
     app.run()
