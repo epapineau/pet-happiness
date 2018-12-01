@@ -6,7 +6,10 @@ from flask import (
     jsonify,
     request,
     redirect)
+import pandas as pd
+from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
+from config import DATABASE_URL
 
 #################################################
 # Flask Setup
@@ -16,63 +19,69 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
-app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///db/database.sqlite"
-db = SQLAlchemy(app)
+# url = os.environ['DATABASE_URL']
+engine = create_engine(DATABASE_URL)
 
-# Define classes
-class Population(db.Model):
-    __tablename__ = 'Pet_Population_Data'
-    id = db.Column(db.Integer, primary_key=True)
-    Pet = db.Column(db.String(100))
-    Country = db.Column(db.String(100))
-    Population = db.Column(db.Integer)
-
-class Happiness(db.Model):
-    __tablename__ = 'World_Happiness'
-    id = db.Column(db.Integer, primary_key=True)
-    Country = db.Column(db.String(100))
-    Happiness_Rank = db.Column(db.Integer)
-    Happiness_Score = db.Column(db.Integer)
-    GDP_per_capita = db.Column(db.Integer)
-    Life_expectancy = db.Column(db.Integer)
-    Generosity = db.Column(db.Integer)
-
-@app.before_first_request
-def setup():
-    db.create_all()
+# @app.before_first_request
+# def setup():
+#     db.create_all()
 
 # Home Route
 @app.route("/")
 def home():
     return render_template("index.html")
 
-# Test route to examine db output
-@app.route("/test")
-def test():
-    # Query db
-    resultsPet = db.session.query(Population.Pet, Population.Country, Population.Population).all()
-    resultsHappiness = db.session.query(Happiness.Country, Happiness.Happiness_Score).all()
+# Route to get all pet population data
+@app.route("/get_pet_data")
+def get_pet_data():
+    # Query for all pet population data
+    q = "SELECT * FROM pet_population\
+         NATURAL JOIN country_id\
+         NATURAL JOIN pet_id\
+         NATURAL JOIN happiness_data\
+         INNER JOIN world_bank_2017 ON pet_population.country_id = world_bank_2017.country_id"
 
-    # Convert data into lists
-    petType = [result[0] for result in resultsPet]
-    petCountry = [result[1] for result in resultsPet]
-    petPop = [result[2] for result in resultsPet]
-    happinessCountry = [result[0] for result in resultsHappiness]
-    happinessScore = [result[1] for result in resultsHappiness]
+    # Send query, clean response
+    petData = pd.read_sql(q, engine)
+    petData = petData.drop(["country_id", "pet_id"], axis = 1)
 
-    # Gather data in plotly friendly format
-    graphObj = [{
-        "type": "bar",
-        "x": petCountry,
-        "y": petPop,
-    },
-    {
-        "type": "bar",
-        "x": happinessCountry,
-        "y": happinessScore
-    }]
+    # Transform to dictionary
+    queryDict = {}
+    for col in list(petData.columns.values):
+        queryDict[col] = [x for x in petData[col]]
 
-    return jsonify(graphObj)
+    # # Gather data in plotly friendly format
+    # graphObj = [{
+    #     "type": "bar",
+    #     "x": petCountry,
+    #     "y": petPop,
+    # },
+    # {
+    #     "type": "bar",
+    #     "x": happinessCountry,
+    #     "y": happinessScore
+    # }]
+
+    return jsonify(queryDict)
+
+# Route to get all world bank country data
+@app.route("/get_wb_data")
+def get_wb_data():
+    # Query for all world happiness data
+    q = "SELECT * FROM happiness_data\
+        NATURAL JOIN country_id\
+        INNER JOIN world_bank_2017 ON happiness_data.country_id = world_bank_2017.country_id"
+
+    # Send query, clean response
+    worldData = pd.read_sql(q, engine)
+    worldData = worldData.drop("country_id", axis = 1)
+
+    # Transform to dictionary
+    worldDict = {}
+    for col in list(worldData.columns.values):
+        worldDict[col] = [x for x in worldData[col]]
+
+    return jsonify(worldDict)
 
 if __name__ == "__main__":
     app.run()
