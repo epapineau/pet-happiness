@@ -27,7 +27,7 @@ var scatter_chart = svg.append("g")
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Import data from the CSV file and execute everything below
-d3.csv("assets/data/cat_data_for_chart.csv", function(err, data) {
+d3.csv("assets/data/bird_data_for_chart.csv", function(err, data) {
   if (err) throw err;
  
  // Step 1: Parse Data
@@ -100,7 +100,7 @@ var toolTip = d3.tip()
     .attr("class", "d3-tip")  //used to get correct pop up
     .offset([-10, 0])
     .html(function(d) {
-      return (`${d.country}<br>Cat:Human Ratio: ${d.dpc}<br>Nat'l Happiness Score: ${d.nhs}`);
+      return (`${d.country}<br>Bird:Human Ratio: ${d.dpc}<br>Nat'l Happiness Score: ${d.nhs}`);
   });
 
 //Create tooltip in the chart
@@ -147,6 +147,6 @@ scatter_chart.append("text")
 scatter_chart.append("text")
 .attr("transform", `translate(${width/3}, ${height + margin.top + 30})`)
 .attr("class", "axisText")
-.text("Cat:Human Population Ratio");
+.text("Bird:Human Population Ratio");
     
 });
