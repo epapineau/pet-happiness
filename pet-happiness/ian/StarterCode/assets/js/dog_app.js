@@ -1,6 +1,7 @@
 var svgWidth = 900;
 var svgHeight = 700;
 
+// testing github
 //adjust margins here (must be large enough to keep axis labels outside of chart)
 var margin = {
   top: 30,
@@ -26,27 +27,27 @@ var scatter_chart = svg.append("g")
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Import data from the CSV file and execute everything below
-d3.csv("assets/data/data.csv", function(err, data) {
+d3.csv("assets/data/dog_data_for_chart.csv", function(err, data) {
   if (err) throw err;
  
  // Step 1: Parse Data
  data.forEach(function(d) {
-    d.income = +d.income;
-    d.smokes= +d.smokes;  
+    d.dpc = +d.dpc;
+    d.nhs= +d.nhs;  
   });
 /////////////////////////////////////////////////////////////////////////////
 // Step 2: Create scale functions
 // xLinearScale function above csv import
 
 var xLinearScale = d3.scaleLinear()
-  .domain([d3.min(data, d => d.income), d3.max(data, d => d.income)])
+  .domain([d3.min(data, d => d.dpc), d3.max(data, d => d.dpc)])
   .range([0, width]);
 // var chosenXAxis = "hair_length";
 // xLinearScale = xScale(data, income);
 /////////////////////////////////////////////////////////////////////////////////////////
 // Create y scale function
 var yLinearScale = d3.scaleLinear()
-  .domain([d3.min(data, d => d.smokes), d3.max(data, d => d.smokes)+1])
+  .domain([d3.min(data, d => d.nhs), d3.max(data, d => d.nhs)+1])
   .range([height, 0]);
   
 // Create axis functions
@@ -71,16 +72,16 @@ var circlesGroup = scatter_chart.selectAll("circle").data(data).enter();
 var d3Tip=circlesGroup
   .append("circle")  
   .classed("stateCircle", true)
-  .attr("cx", d => xLinearScale(d.income))
-  .attr("cy", d => yLinearScale(d.smokes))
+  .attr("cx", d => xLinearScale(d.dpc))
+  .attr("cy", d => yLinearScale(d.nhs))
   .attr("r", "15")
   .attr("opacity", ".5");
   
 //Create text labels with state abbreviation for each circle
 circlesGroup.append("text")
   .classed("stateText", true)
-  .attr("x", d => xLinearScale(d.income))
-  .attr("y", d => yLinearScale(d.smokes))
+  .attr("x", d => xLinearScale(d.dpc))
+  .attr("y", d => yLinearScale(d.nhs))
   .attr("stroke", "blue")
   .attr("font-size", "10px")
   .text(d => d.abbr)
@@ -99,7 +100,7 @@ var toolTip = d3.tip()
     .attr("class", "d3-tip")  //used to get correct pop up
     .offset([-10, 0])
     .html(function(d) {
-      return (`${d.state}<br>Dogs:Human Ratio: ${d.income}<br>Nat'l Happiness Score: ${d.smokes}`);
+      return (`${d.country}<br>Dogs:Human Ratio: ${d.dpc}<br>Nat'l Happiness Score: ${d.nhs}`);
   });
 
 //Create tooltip in the chart
