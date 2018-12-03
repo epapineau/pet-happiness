@@ -23,14 +23,29 @@ app = Flask(__name__)
 # engine = create_engine(DATABASE_URL)
 engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappiness')
 
-# @app.before_first_request
-# def setup():
-#     db.create_all()
-
 # Home Route
 @app.route("/")
 def home():
     return render_template("index.html")
+
+# Query the database and send the jsonified results
+@app.route("/send", methods=["GET", "POST"])
+def send():
+    if request.method == "POST":
+        # Get form data
+        petType = request.form["petType"]
+        petQuant = request.form["petQuant"]
+        petCity = request.form["petCity"]
+        petCountry = request.form["petCountry"]
+        insert = f"INSERT INTO pet_survey VALUES ({petType}, {petQuant}, {petCity}, {petCountry}"
+        print(insert)
+
+        # pet = Pet(name=name, lat=lat, lon=lon)
+        # db.session.add(pet)
+        # db.session.commit()
+        return redirect("/", code=302)
+
+    return render_template("contribute.html")
 
 # Route to get all pet population data
 @app.route("/get_pet_data")
@@ -45,6 +60,7 @@ def get_pet_data():
     # Send query, clean response
     petData = pd.read_sql(q, engine)
     petData = petData.drop(["country_id", "pet_id"], axis = 1)
+    
     # Create dfs by pet type
     dogData = petData.loc[petData['pet_type'] == "dog"]
     catData = petData.loc[petData['pet_type'] == "cat"]
