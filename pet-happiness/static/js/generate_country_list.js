@@ -25,7 +25,7 @@ function addCountries() {
       .data(countries)
       .enter()
       .append("option")
-      .attr("value", d => d.id)
+      .attr("value", d => `${d.id};${d.country}`)
       .html(d => d.country)
   });
 }

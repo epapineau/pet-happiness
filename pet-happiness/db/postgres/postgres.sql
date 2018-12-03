@@ -43,6 +43,6 @@ CREATE TABLE pet_survey (
     pet_quantity INT,
     country_id INT REFERENCES country_id(country_id),
     city VARCHAR(100),
-    latitude INT,
-    longitude INT
+    latitude NUMERIC,
+    longitude NUMERIC
 );

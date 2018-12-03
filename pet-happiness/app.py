@@ -1,16 +1,18 @@
 # import necessary libraries
 import os
+import requests
+import json
+import numpy as np
+import pandas as pd
 from flask import (
     Flask,
     render_template,
     jsonify,
     request,
     redirect)
-import pandas as pd
-import numpy as np
 from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
-from config import DATABASE_URL, localHost, localPass
+from config import DATABASE_URL, gkey, localHost, localPass
 
 #################################################
 # Flask Setup
@@ -20,6 +22,7 @@ app = Flask(__name__)
 #################################################
 # Database Setup
 #################################################
+# gkey = os.environ['gkey']
 # url = os.environ['DATABASE_URL']
 engine = create_engine(DATABASE_URL)
 # engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappiness')
@@ -36,14 +39,23 @@ def send():
         # Get form data
         petType = request.form["petType"]
         petQuant = request.form["petQuant"] # does not grab default value of 1
-        petCity = request.form["petCity"]
-        petCountry = request.form["petCountry"]
-        insert = f"INSERT INTO pet_survey VALUES ({petType}, {petQuant}, {petCity}, {petCountry}"
-        print(insert)
+        petCity = request.form["petCity"] 
+        petCountry = request.form["petCountry"]  # country db id, not country name (needed to query for lat/long?) 
+        petCountryId = petCountry.split(";")[0]
+        petCountryName = petCountry.split(";")[1]
 
-        # pet = Pet(name=name, lat=lat, lon=lon)
-        # db.session.add(pet)
-        # db.session.commit()
+        
+        # Get lattitude and longitude for city, country
+        targetCity = f"{petCity}, {petCountryName}"
+        targetUrl = f"https://maps.googleapis.com/maps/api/geocode/json?address={targetCity}&key={gkey}"
+        locData = requests.get(targetUrl).json()
+        lat = locData["results"][0]["geometry"]["location"]["lat"]
+        lng = locData["results"][0]["geometry"]["location"]["lng"]
+
+        # Insert results into db
+        insert = f"INSERT INTO pet_survey VALUES ({petType}, {petQuant}, {petCountryId}, '{petCity}', {lat}, {lng})"
+        engine.execute(insert)
+
         return redirect("/", code=302)
 
     return render_template("contribute.html")
