@@ -32,6 +32,11 @@ engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappi
 def home():
     return render_template("index.html")
 
+# Survey map route
+@app.route("/survey_mapped")
+def survey_map():
+    return render_template("survey-map.html")
+
 # Query the database and send the jsonified results
 @app.route("/send", methods=["GET", "POST"])
 def send():
@@ -43,7 +48,6 @@ def send():
         petCountry = request.form["petCountry"]  # country db id, not country name (needed to query for lat/long?) 
         petCountryId = petCountry.split(";")[0]
         petCountryName = petCountry.split(";")[1]
-
         
         # Get lattitude and longitude for city, country
         targetCity = f"{petCity}, {petCountryName}"
@@ -56,26 +60,34 @@ def send():
         insert = f"INSERT INTO pet_survey VALUES ({petType}, '{petName}', {petCountryId}, '{petCity}', {lat}, {lng})"
         engine.execute(insert)
 
-        return redirect("/", code=302)
+        return redirect("/survey_mapped", code=302)
 
     return render_template("contribute.html")
 
 # Route to display pet survery data
 @app.route("/map_survey")
 def map_survey():
-    q = "SELECT "
-    results = engin
+    # Query for pet survey data
+    q = "SELECT ps.pet_name, ps.city, ps.latitude, ps.longitude, pi.pet_type\
+         FROM pet_survey ps\
+         NATURAL JOIN pet_id pi"
+    surveyData = pd.read_sql(q, engine)
 
-    hover_text = [result[0] for result in results]
-    lat = [result[1] for result in results]
-    lon = [result[2] for result in results]
+    # Transform to dictionary
+    surveyDict = {}
+    for col in list(surveyData.columns.values):
+        surveyDict[col] = [x for x in surveyData[col]]
 
+
+    # Plot 
     pet_data = [{
         "type": "scattergeo",
         "locationmode": "USA-states",
-        "lat": lat,
-        "lon": lon,
-        "text": hover_text,
+        "lat": surveyDict['latitude'],
+        "lon": surveyDict['longitude'],
+        # THIS IS BORKED PLZ FIX
+        "text": f"{surveyDict['pet_name']} the {surveyDict['pet_type']} from {surveyDict['city']}",
+        # END BORK
         "hoverinfo": "text",
         "marker": {
             "size": 50,
@@ -115,7 +127,7 @@ def get_pet_data():
             queryDict[col] = [x for x in df[col]]
         return queryDict
 
-    # Everything together in one dictionar
+    # Everything together in one dictionary
     petDict = {}
     petDict['dog'] = makedictionary(dogData)
     petDict['cat'] = makedictionary(catData)
