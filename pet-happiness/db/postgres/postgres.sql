@@ -40,7 +40,7 @@ CREATE TABLE happiness_data (
 
 CREATE TABLE pet_survey (
     pet_id INT REFERENCES pet_id(pet_id),
-    pet_quantity INT,
+    pet_name VARCHAR(100),
     country_id INT REFERENCES country_id(country_id),
     city VARCHAR(100),
     latitude NUMERIC,

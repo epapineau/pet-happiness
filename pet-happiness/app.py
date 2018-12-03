@@ -24,8 +24,8 @@ app = Flask(__name__)
 #################################################
 # gkey = os.environ['gkey']
 # url = os.environ['DATABASE_URL']
-engine = create_engine(DATABASE_URL)
-# engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappiness')
+# engine = create_engine(DATABASE_URL)
+engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappiness')
 
 # Home Route
 @app.route("/")
@@ -38,7 +38,7 @@ def send():
     if request.method == "POST":
         # Get form data
         petType = request.form["petType"]
-        petQuant = request.form["petQuant"] # does not grab default value of 1
+        petName = request.form["petName"] # does not grab default value of 1
         petCity = request.form["petCity"] 
         petCountry = request.form["petCountry"]  # country db id, not country name (needed to query for lat/long?) 
         petCountryId = petCountry.split(";")[0]
@@ -53,12 +53,40 @@ def send():
         lng = locData["results"][0]["geometry"]["location"]["lng"]
 
         # Insert results into db
-        insert = f"INSERT INTO pet_survey VALUES ({petType}, {petQuant}, {petCountryId}, '{petCity}', {lat}, {lng})"
+        insert = f"INSERT INTO pet_survey VALUES ({petType}, '{petName}', {petCountryId}, '{petCity}', {lat}, {lng})"
         engine.execute(insert)
 
         return redirect("/", code=302)
 
     return render_template("contribute.html")
+
+# Route to display pet survery data
+@app.route("/map_survey")
+def map_survey():
+    q = "SELECT "
+    results = engin
+
+    hover_text = [result[0] for result in results]
+    lat = [result[1] for result in results]
+    lon = [result[2] for result in results]
+
+    pet_data = [{
+        "type": "scattergeo",
+        "locationmode": "USA-states",
+        "lat": lat,
+        "lon": lon,
+        "text": hover_text,
+        "hoverinfo": "text",
+        "marker": {
+            "size": 50,
+            "line": {
+                "color": "rgb(8,8,8)",
+                "width": 1
+            },
+        }
+    }]
+
+    return jsonify(pet_data)
 
 # Route to get all pet population data
 @app.route("/get_pet_data")
