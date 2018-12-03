@@ -19,10 +19,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link text-white" href="/">Home<span class="sr-only">(current)</span></a>
+                    <a class="nav-link text-white" href="#">Home<span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-muted" href="/survey_mapped">Pet Survey</a>
+                    <a class="nav-link text-muted" href="#">Happiness</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-muted" href="#">GDP</a>
@@ -35,25 +35,32 @@
                 </li>
                 </ul>
             </div>
-            </nav>  <!-- End navbar -->
-
-
+    </nav>  <!-- End navbar -->
 
 
 
     <div class="container">
         <div class="jumbotron" style="text-align: center">
-            <h1>Pets & Happiness</h1>
+            <h1>Pet Pal</h1>
+            <p>Find your pet a pal!</p>
         </div>
+
         <div class="row">
-            <div id="graph1"></div>
-            <div id="graph2"></div>
+            <div class="col-md-12">
+                <h2>Look at all of the current pet pals!</h2>
+                <div id="plot"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2><a href="/send">Add your pet here!</a></h2>
+            </div>
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
-
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/map_pet_survey.js') }}"></script>
 </body>
 </html>
