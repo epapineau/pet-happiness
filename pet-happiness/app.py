@@ -7,6 +7,7 @@ from flask import (
     request,
     redirect)
 import pandas as pd
+import numpy as np
 from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
 from config import DATABASE_URL, localHost, localPass
@@ -20,8 +21,8 @@ app = Flask(__name__)
 # Database Setup
 #################################################
 # url = os.environ['DATABASE_URL']
-# engine = create_engine(DATABASE_URL)
-engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappiness')
+engine = create_engine(DATABASE_URL)
+# engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappiness')
 
 # Home Route
 @app.route("/")
@@ -67,7 +68,7 @@ def get_pet_data():
     fishData = petData.loc[petData['pet_type'] == "fish"]
     birdData = petData.loc[petData['pet_type'] == "bird"]
 
-    # Function to make dictionary from df
+    # Function to transfrom df to dictionary
     def makedictionary(df):
         queryDict = {}
         for col in list(df.columns.values):
@@ -102,6 +103,22 @@ def get_wb_data():
         worldDict[col] = [x for x in worldData[col]]
 
     return jsonify(worldDict)
+
+# Route to get all pet population data
+@app.route("/get_country_list")
+def get_country_list():
+    # Query for all pet population data
+    q = "SELECT * FROM country_id"
+
+    # Send query, clean response
+    countries = pd.read_sql(q, engine)
+    countriesList = []
+    for i in np.arange(len(countries)):
+        countryID = str(countries['country_id'][i])
+        countryName = countries['country'][i]
+        countriesList.append({'id': countryID, 'country': countryName})
+
+    return jsonify(countriesList)
 
 if __name__ == "__main__":
     app.run()
