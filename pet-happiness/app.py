@@ -35,7 +35,7 @@ def send():
     if request.method == "POST":
         # Get form data
         petType = request.form["petType"]
-        petQuant = request.form["petQuant"]
+        petQuant = request.form["petQuant"] # does not grab default value of 1
         petCity = request.form["petCity"]
         petCountry = request.form["petCountry"]
         insert = f"INSERT INTO pet_survey VALUES ({petType}, {petQuant}, {petCity}, {petCountry}"
