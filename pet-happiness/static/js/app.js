@@ -11,7 +11,6 @@ function handleSubmit() {
 function plotPetPop(petType){
   /* data route */  
   var url = "/get_pet_data";
-  console.log(petType);
 
   d3.json(url).then(function(petData) {    
     // Parse response
