@@ -97,6 +97,13 @@ def map_survey():
     for col in list(surveyData.columns.values):
         surveyDict[col] = [x for x in surveyData[col]]
 
+    # Create list of map labels
+    petNames = surveyDict['pet_name']
+    petType = surveyDict['pet_type']
+    dataLabels = []
+    for i in np.arange(len(petNames)):
+        label = f"{petNames[i]} the {petType[i]}"
+        dataLabels.append(label)
 
     # Plot 
     pet_data = [{
@@ -105,7 +112,7 @@ def map_survey():
         "lat": surveyDict['latitude'],
         "lon": surveyDict['longitude'],
         # THIS IS BORKED PLZ FIX
-        "text": f"{surveyDict['pet_name']} the {surveyDict['pet_type']} from {surveyDict['city']}",
+        "text": dataLabels,
         # END BORK
         "hoverinfo": "text",
         "marker": {
