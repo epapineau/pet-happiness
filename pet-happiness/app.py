@@ -12,7 +12,7 @@ from flask import (
     redirect)
 from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
-from .config import DATABASE_URL, gkey, localHost, localPass
+# from .config import DATABASE_URL, gkey, localHost, localPass
 
 # Flask setup
 app = Flask(__name__)
