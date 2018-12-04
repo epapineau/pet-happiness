@@ -22,7 +22,7 @@ gkey = os.environ['gkey']
 url = os.environ['DATABASE_URL']
 
 # Connect to database
-engine = create_engine(DATABASE_URL)
+engine = create_engine(url)
 # engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappiness')
 
 # Home Route
