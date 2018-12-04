@@ -12,18 +12,18 @@ from flask import (
     redirect)
 from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
-from config import DATABASE_URL, gkey, localHost, localPass
+# from config import DATABASE_URL, gkey, localHost, localPass
 
 # Flask setup
 app = Flask(__name__)
 
 # Get keys from environment
-# gkey = os.environ['gkey']
-# url = os.environ['DATABASE_URL']
+gkey = os.environ['gkey']
+url = os.environ['DATABASE_URL']
 
 # Connect to database
-# engine = create_engine(url)
-engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappiness')
+engine = create_engine(url)
+# engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappiness')
 
 # Home Route
 @app.route("/")
