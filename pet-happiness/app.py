@@ -1,4 +1,4 @@
-# import necessary libraries
+# Import Libraries
 import os
 import requests
 import json
@@ -12,26 +12,45 @@ from flask import (
     redirect)
 from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
-from config import DATABASE_URL, gkey, localHost, localPass
+from .config import DATABASE_URL, gkey, localHost, localPass
 
-#################################################
-# Flask Setup
-#################################################
+# Flask setup
 app = Flask(__name__)
 
-#################################################
-# Database Setup
-#################################################
-# gkey = os.environ['gkey']
-# url = os.environ['DATABASE_URL']
-# engine = create_engine(DATABASE_URL)
-engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappiness')
+# Get keys from environment
+gkey = os.environ['gkey']
+url = os.environ['DATABASE_URL']
+
+# Connect to database
+engine = create_engine(DATABASE_URL)
+# engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappiness')
 
 # Home Route
 @app.route("/")
 def home():
     return render_template("index.html")
 
+# Ian's graph Route
+@app.route("/ian")
+def ian():
+    return render_template("ian.html")
+
+# Mehrun's graph Route
+@app.route("/mehrun")
+def mehrun():
+    return render_template("mehrun.html")
+
+# Preeti's graph Route
+@app.route("/preeti")
+def preeti():
+    return render_template("preeti.html")
+
+# Read Geojson
+@app.route("/geojson")
+def geojson():
+    with open("/templates/custom.geo.json") as f:
+        data = json.load(f)
+    return jsonify(data)
 # Survey map route
 @app.route("/survey_mapped")
 def survey_map():

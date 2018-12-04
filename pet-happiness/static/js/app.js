@@ -1,52 +1,75 @@
-function examplePetPlot() {
+function handleSubmit() {
+  // Prevent the page from refreshing
+  d3.event.preventDefault();
+  
+  // Get form input of pettype and clear form
+  var petType = d3.select("#inputType").node().value;
+  // d3.select("#inputType").node().value = "";
+  plotPetPop(petType);
+}
+
+function plotPetPop(petType){
   /* data route */  
   var url = "/get_pet_data";
+  console.log(petType);
 
   d3.json(url).then(function(petData) {    
     // Parse response
-    var countries = petData.dog.country;
-    var happinessScore = petData.dog.happiness_score;
-    var petPopulation = petData.dog.pet_population;
-    console.log(petPopulation);
-    var graphObj = {"type": "bar",
+    var countries = petData[petType]['country'];
+    var petPopulation = petData[petType]['pet_population'];
+
+    // Trace
+    var petBar = {"type": "bar",
       "x": countries,
-      "y": petPopulation
+      "y": petPopulation,
+      marker: {
+        color: 'rgb(237, 192, 34)'
+      }
     };
 
-    function makebar(i) {
-      return {
-          y: petPopulation,
-          visible: i === 0,
-          name: i
-      };
-  }
-  
-    // Console log variables
-    // console.log("Full data dictionary:")
-    // console.log(petData)
-    // console.log("------------------------------")
-    // console.log("Example of accessing specific column")
-    // console.log(petData['bird']);
-
-    // Traces
-
-    // var happiTrace = {"type": "bar",
-    //                   "x": countries,
-    //                   "y": happinessScore}
-
-    // // Layouts
-    var graphLayout = {
-      title: "Pet Population by country (rough graph)",
+    // Layout
+    var petLayout = {
+      title: `Top 20 Global ${petType[0].toUpperCase()}${petType.substr(1, petType.length)} Populations`,
+      xaxis: {
+        tickangle: 45
+      },
+      yaxis: {
+        title: `${petType[0].toUpperCase()}${petType.substr(1, petType.length)} Population`
+      }
     };
-    // var happiLayout = {
-    //   title: "Happiness by country (rough graph)",
-    // };
 
-    // Plotly.newPlot("graph1", [graphObj], graphLayout);
-    // Plotly.newPlot("graph2", [happiTrace], happiLayout);
+    // Plot
+    Plotly.newPlot("top20-pet-populations", [petBar], petLayout);
   });
 }
-examplePetPlot();
+// Default load
+plotPetPop('dog');
+// Change dataset on click
+d3.select("#submit").on("click", handleSubmit);
+
+
+
+
+
+
+
+// function indexMap(){
+//   var myGeoJSONPath = '/static/custom.geo.json';
+//   var myCustomStyle = {
+//     stroke: false,
+//     fill: true,
+//     fillColor: '#fff',
+//     fillOpacity: 1
+//   };
+//   $.getJSON(myGeoJSONPath,function(data){
+//     var map = L.map('graph2').setView([39.74739, -105], 4);
+//     L.geoJson(data, {
+//       clickable: false,
+//       style: myCustomStyle
+//     }).addTo(map);
+//         });
+// }
+// indexMap();
 
 // function exampleWbPlot() {
 //   /* data route */
@@ -61,3 +84,20 @@ examplePetPlot();
 //   });
 //   }
 // exampleWbPlot();
+
+
+
+
+
+// function worldHappinessChloropleth() {
+//   /* data route */
+//   var url = "/custom.geo.json";
+
+//   d3.json(url).then(function(worldHappiness) {
+//     // Parse response
+//     console.log(worldHappiness);
+
+//     // Plots go here
+//   });
+//   }
+//   worldHappinessChloropleth();

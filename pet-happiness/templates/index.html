@@ -6,54 +6,106 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Pet Happiness</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- <link rel="stylesheet" href="../static/css/style.css"> -->
 </head>
 <body>
-    <!-- Begin navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-            <a class="navbar-brand  text-white" href="#">Bootstrap!</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <div class = "container mt-5">
+        <!-- Begin navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-        
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link text-white" href="/">Home<span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-muted" href="/survey_mapped">Pet Survey</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-muted" href="#">GDP</a>
-                </li>
-                <li class="nav-item">
-                        <a class="nav-link text-muted" href="#">Contribute</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-muted" href="#">Data</a>
-                </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-light" href="/"><b>Home</b><span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Pet Population Analysis
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/ian">Ian</a>
+                            <a class="dropdown-item" href="/mehrun">Mehrun</a>
+                            <a class="dropdown-item" href="/preeti">Preeti</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/survey_mapped">Our Pet Survey</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/send">Add Pet Data</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="#">Data Sources</a>
+                    </li>
                 </ul>
             </div>
-            </nav>  <!-- End navbar -->
-
-
-
-
+        </nav>  <!-- End navbar -->
+    </div>
 
     <div class="container">
-        <div class="jumbotron" style="text-align: center">
-            <h1>Pets & Happiness</h1>
+        <!-- Begin Image Banner -->
+        <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner mb-5">
+                <div class="carousel-item active">
+                    <img class="d-block w-100" src="/static/pets_sitting_stock.jpeg" alt="A variety of pets">
+                    <div class="carousel-caption text-light">
+                        <h1>if(pets === happiness)</h1>
+                        <p>An investigation into worldwide pet populations and happiness scores.</p>
+                    </div>
+                </div>
+            </div>  <!-- End image banner -->
         </div>
+        
+        <!-- Begin content -->
+        <h4 class="text-dark text-center">World Happiness Scores</h4>
         <div class="row">
-            <div id="graph1"></div>
+            <!-- World Happiness Map -->
             <div id="graph2"></div>
+        </div>
+        <h4 class="text-dark text-center">Top 20 Global Pet Populations</h4>
+        <div class="row d-flex justify-content-center">
+            <div class="col-3">
+                <form class="form-inline">
+                    <div class="form-group p-2">
+                        <select class="custom-select" id="inputType" name = "petType">
+                            <option selected value="dog">Dog</option>
+                            <option value="cat">Cat</option>
+                            <option value="bird">Bird</option>
+                            <option value="fish">Fish</option>
+                        </select>
+                    </div>
+                    <button id="submit" type="submit" class="btn btn-default">Select Population</button>
+                </form>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-8">
+                <!-- World Pet populations bar graph -->
+                <div id="top20-pet-populations"></div>
+            </div>
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+    <div class="container">
+        <!-- Footer -->
+        <div class="jumbotron jumbotron-fluid mt-5 p-1">
+            <div class="container text-center pt-2">
+                <p>&copy; 2018</p>
+            </div>
+        </div>  <!-- End footer -->
+    </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script> -->
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>
