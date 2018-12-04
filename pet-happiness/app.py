@@ -45,6 +45,12 @@ def mehrun():
 def preeti():
     return render_template("preeti.html")
 
+# Read Geojson
+@app.route("/geojson")
+def geojson():
+    with open("/templates/custom.geo.json") as f:
+        data = json.load(f)
+    return jsonify(data)
 # Survey map route
 @app.route("/survey_mapped")
 def survey_map():
