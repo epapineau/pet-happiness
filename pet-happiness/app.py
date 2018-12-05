@@ -31,9 +31,9 @@ def home():
     return render_template("index.html")
 
 # Ian's graph Route
-@app.route("/ian")
+@app.route("/pet_per_capita")
 def ian():
-    return render_template("ian.html")
+    return render_template("pet-per-capita.html")
 
 # Mehrun's graph Route
 @app.route("/mehrun")
@@ -111,9 +111,7 @@ def map_survey():
         "locationmode": "USA-states",
         "lat": surveyDict['latitude'],
         "lon": surveyDict['longitude'],
-        # THIS IS BORKED PLZ FIX
         "text": dataLabels,
-        # END BORK
         "hoverinfo": "text",
         "marker": {
             "size": 50,
@@ -126,7 +124,7 @@ def map_survey():
 
     return jsonify(pet_data)
 
-# Route to get all pet population data
+# Route to get all pet population data, formatted for plotly
 @app.route("/get_pet_data")
 def get_pet_data():
     # Query for all pet population data
@@ -139,6 +137,9 @@ def get_pet_data():
     # Send query, clean response
     petData = pd.read_sql(q, engine)
     petData = petData.drop(["country_id", "pet_id"], axis = 1)
+
+    # Calculate pets per capita
+    petData['per_capita'] = petData['pet_population'] / petData['population']
     
     # Create dfs by pet type
     dogData = petData.loc[petData['pet_type'] == "dog"]
@@ -161,6 +162,51 @@ def get_pet_data():
     petDict['bird'] = makedictionary(birdData)
 
     return jsonify(petDict)
+
+# Route to get all pet population data, formatted for d3
+@app.route("/get_pet_data_d3")
+def get_pet_data_d3():
+    # Query for all pet population data
+    q = "SELECT * FROM pet_population\
+         NATURAL JOIN country_id\
+         NATURAL JOIN pet_id\
+         NATURAL JOIN happiness_data\
+         INNER JOIN world_bank_2017 ON pet_population.country_id = world_bank_2017.country_id"
+
+    # Send query, clean response
+    petData = pd.read_sql(q, engine)
+    petData = petData.drop(["country_id", "pet_id"], axis = 1)
+
+    # Calculate pets per capita
+    petData['per_capita'] = petData['pet_population'] / petData['population']
+    
+    # Create dfs by pet type
+    dogData = petData.loc[petData['pet_type'] == "dog"]
+    catData = petData.loc[petData['pet_type'] == "cat"]
+    fishData = petData.loc[petData['pet_type'] == "fish"]
+    birdData = petData.loc[petData['pet_type'] == "bird"]
+
+    def maked3dictionary(df):
+        colNames = list(df.columns.values)
+        petDataList = []
+        for i in np.arange(len(df)):
+            d3Dict = {}
+            for col in np.arange(len(colNames)):
+                value = df.iloc[i, col]
+                if(isinstance(value, str) or isinstance(value, int)):
+                    d3Dict[colNames[col]] = value
+                else:
+                    d3Dict[colNames[col]] = np.asscalar(value)
+            petDataList.append(d3Dict) 
+        return petDataList
+
+    d3PetDict = {}
+    d3PetDict['dog'] = maked3dictionary(dogData)
+    d3PetDict['cat'] = maked3dictionary(catData)
+    d3PetDict['fish'] = maked3dictionary(fishData)
+    d3PetDict['bird'] = maked3dictionary(birdData)
+
+    return jsonify(d3PetDict)
 
 # Route to get all world bank country data
 @app.route("/get_wb_data")
