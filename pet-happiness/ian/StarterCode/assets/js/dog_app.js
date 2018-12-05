@@ -1,29 +1,4 @@
-var svgWidth = 900;
-var svgHeight = 700;
 
-// testing github
-//adjust margins here (must be large enough to keep axis labels outside of chart)
-var margin = {
-  top: 30,
-  right: 20,
-  bottom: 70,
-  left: 110,
-};
-
-//chart area
-var width = svgWidth - margin.left - margin.right;
-var height = svgHeight - margin.top - margin.bottom;
-
-
-// Create an SVG wrapper, append an SVG group that will hold our scatter plot, and shift the latter by left and top margins.
-var svg = d3.select("#scatter")
-.append("svg")
-.attr("width", svgWidth)
-.attr("height", svgHeight);
-
-// Append an SVG group
-var scatter_chart = svg.append("g")
-  .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Import data from the CSV file and execute everything below
@@ -31,10 +6,7 @@ d3.csv("assets/data/dog_data_for_chart.csv", function(err, data) {
   if (err) throw err;
  
  // Step 1: Parse Data
- data.forEach(function(d) {
-    d.dpc = +d.dpc;
-    d.nhs= +d.nhs;  
-  });
+
 /////////////////////////////////////////////////////////////////////////////
 // Step 2: Create scale functions
 // xLinearScale function above csv import
