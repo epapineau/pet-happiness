@@ -6,14 +6,14 @@ function handleSubmit() {
 function petLifeExpt(petType){
     // Setting the dimensions for the SVG container
     var svgHeight = 500;
-    var svgWidth  = 800;
+    var svgWidth  = 810;
 
     // Setting other Chart Params
     var margin = { 
     top: 20,
-    right: 40,
+    right: 50,
     bottom: 100,
-    left: 100 
+    left: 95
     };
 
     // chart area minus margins
@@ -36,7 +36,6 @@ function petLifeExpt(petType){
 
     d3.json(url).then(function(petData) {
         var data = petData[petType];
-        console.log(data);
 
         // define two x axis based on Happiness_Score and Life Expectancy to scale chart width
         var xLinearScaleHappiness_Score = d3.scaleLinear()
