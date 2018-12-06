@@ -1,4 +1,11 @@
 function handleSubmit() {
+    // Prevent the page from refreshing
+    d3.event.preventDefault();   
+
+    // Remove previous figure
+    d3.select("svg").remove();
+
+    // Select pet type from input and run graphing function
     var petType = d3.select("#inputType").node().value;
     petLifeExpt(petType);
 }  
