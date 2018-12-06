@@ -86,13 +86,14 @@ function petLifeExpt(petType){
         var circles = circlesGroup.append("circle")
             .attr("cx", d => xLinearScaleHealth(d.life_expectancy))
             .attr("cy", d => yLinearScalePet_Population(d.pet_population))
-            .attr("r", "10")
+            .attr("r", "12")
             .attr("fill", "orange")
+            .attr("opacity", ".5");
         
         var text = circlesGroup.append("text")
-            .attr("x", d => xLinearScaleHealth(d.life_expectancy) - 7)
+            .attr("x", d => xLinearScaleHealth(d.life_expectancy) - 9)
             .attr("y", d => yLinearScalePet_Population(d.pet_population) + 3)
-            .attr("fill", "white")
+            .attr("fill", "OrangeRed")
             .text(d => d.world_bank_code)
             .style("text-align", "left")
             .style("font-size", "10px")

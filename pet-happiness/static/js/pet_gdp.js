@@ -15,10 +15,10 @@ function petGdp(petType){
 
     //adjust margins here (must be large enough to keep axis labels outside of chart)
     var margin = {
-    top: 30,
-    right: 20,
-    bottom: 70,
-    left: 110,
+    top: 20,
+    right: 50,
+    bottom: 100,
+    left: 95
     };
 
     //chart area
@@ -76,16 +76,16 @@ function petGdp(petType){
             .append("circle")  
             .attr("cx", d => xLinearScale(d.per_capita_gdp))
             .attr("cy", d => yLinearScale(d.pet_population))
-            .attr("r", "15")
+            .attr("r", "12")
             .attr("fill", "orange")
             .attr("opacity", ".5");
 
         //Create text labels with state abbreviation for each circle
         circlesGroup.append("text")
             // .classed("countryText", true)
-            .attr("x", d => xLinearScale(d.per_capita_gdp))
-            .attr("y", d => yLinearScale(d.pet_population))
-            .attr("stroke", "white")
+            .attr("x", d => xLinearScale(d.per_capita_gdp) - 9)
+            .attr("y", d => yLinearScale(d.pet_population) + 3)
+            .attr("stroke", "OrangeRed")
             .attr("font-size", "10px")
             .text(d => d.world_bank_code)
     
@@ -109,8 +109,8 @@ function petGdp(petType){
         // Create Y-axis label
         scatter_chart.append("text")
             .attr("transform", "rotate(-90)")
-            .attr("y", 40 - margin.left)
-            .attr("x", -100 - (height / 2))
+            .attr("x", 0 - (height / 2))
+            .attr("y", 0 - (margin.left / 2) - 50)
             .attr("dy", "1em")
             .attr("class", "axisText")
             .text("Pet Population");
@@ -119,7 +119,7 @@ function petGdp(petType){
         scatter_chart.append("text")
             .attr("transform", `translate(${width/3}, ${height + margin.top + 30})`)
             .attr("class", "axisText")
-            .text("Country GDP(In US Billion Dollar)");
+            .text("GDP (In US Billion Dollar)");
     });
 }
 
