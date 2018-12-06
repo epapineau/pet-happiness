@@ -29,7 +29,8 @@ CREATE TABLE world_bank_2017 (
     country_id INT REFERENCES country_id(country_id),
     population BIGINT,
     per_capita_GDP BIGINT,
-    percent_urban_pop NUMERIC
+    percent_urban_pop NUMERIC,
+    life_expectancy NUMERIC
 );
 
 CREATE TABLE happiness_data (

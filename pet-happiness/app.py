@@ -36,9 +36,9 @@ def ian():
     return render_template("pet-per-capita.html")
 
 # Mehrun's graph Route
-@app.route("/mehrun")
+@app.route("/pet_life_expectancy")
 def mehrun():
-    return render_template("mehrun.html")
+    return render_template("pet-life-expectancy.html")
 
 # Preeti's graph Route
 @app.route("/preeti")
