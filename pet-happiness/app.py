@@ -41,9 +41,9 @@ def mehrun():
     return render_template("pet-life-expectancy.html")
 
 # Preeti's graph Route
-@app.route("/preeti")
+@app.route("/pet_GDP")
 def preeti():
-    return render_template("preeti.html")
+    return render_template("pet-gdp.html")
 
 # Read Geojson
 @app.route("/geojson")
