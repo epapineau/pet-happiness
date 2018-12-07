@@ -30,7 +30,6 @@ function petPerCapita(petType, divId, xAxisLabel){
   
     d3.json(url).then(function(petData) {
         var data = petData[petType];
-        console.log(data);
 
         // Define scales
         var xLinearScale = d3.scaleLinear()
@@ -80,9 +79,9 @@ function petPerCapita(petType, divId, xAxisLabel){
         // Circle labels
         circlesGroup.append("text")
             // .classed("stateText", true)
-            .attr("x", d => xLinearScale(d.per_capita))
-            .attr("y", d => yLinearScale(d.hapiness_score))
-            .attr("stroke", "white")
+            .attr("x", d => xLinearScale(d.per_capita) - 8)
+            .attr("y", d => yLinearScale(d.hapiness_score) + 2)
+            .attr("stroke", "OrangeRed")
             .attr("font-size", "8px")
             .text(d => d.world_bank_code)
         

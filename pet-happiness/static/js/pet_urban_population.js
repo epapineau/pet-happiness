@@ -7,10 +7,10 @@ function handleSubmit() {
 
     // Select pet type from input and run graphing function
     var petType = d3.select("#inputType").node().value;
-    petLifeExpt(petType);
+    petUrbanPop(petType);
 }  
 
-function petLifeExpt(petType){
+function petUrbanPop(petType){
     // Setting the dimensions for the SVG container
     var svgHeight = 500;
     var svgWidth  = 810;
@@ -29,7 +29,7 @@ function petLifeExpt(petType){
 
     // create svg container, append an SVG group that will hold the chart.
     var svg = d3
-        .select("#life-expectancy")
+        .select("#urban-population")
         .append("svg")
         .attr("width", svgWidth)
         .attr("height", svgHeight);
@@ -50,8 +50,8 @@ function petLifeExpt(petType){
                      d3.max(data, d => d.hapiness_score)])
             .range([0, width]);
         var xLinearScaleHealth = d3.scaleLinear()
-            .domain([d3.min(data, d => d.life_expectancy),
-                     d3.max(data, d => d.life_expectancy)])
+            .domain([d3.min(data, d => d.percent_urban_pop),
+                     d3.max(data, d => d.percent_urban_pop)])
             .range([0, width]);
 
         // define two y axis based on Pet Population to scale chart height
@@ -84,14 +84,14 @@ function petLifeExpt(petType){
             .enter()
 
         var circles = circlesGroup.append("circle")
-            .attr("cx", d => xLinearScaleHealth(d.life_expectancy))
+            .attr("cx", d => xLinearScaleHealth(d.percent_urban_pop))
             .attr("cy", d => yLinearScalePet_Population(d.pet_population))
             .attr("r", "12")
             .attr("fill", "orange")
             .attr("opacity", ".5");
         
         var text = circlesGroup.append("text")
-            .attr("x", d => xLinearScaleHealth(d.life_expectancy) - 9)
+            .attr("x", d => xLinearScaleHealth(d.percent_urban_pop) - 9)
             .attr("y", d => yLinearScalePet_Population(d.pet_population) + 3)
             .attr("fill", "OrangeRed")
             .text(d => d.world_bank_code)
@@ -103,7 +103,7 @@ function petLifeExpt(petType){
         var toolTip = d3.tip()
             .attr("class", "d3-tip")
             .html(function(d) {
-                return (`Country: ${d.country}<br>Life Expectancy: ${d.life_expectancy}<br>Total Pet Population: $${d.pet_population}`);
+                return (`Country: ${d.country}<br>Urban Population: ${d.percent_urban_pop}<br>Total Pet Population: $${d.pet_population}`);
         });
 
         // Create the tooltip in circles and text.
@@ -136,11 +136,11 @@ function petLifeExpt(petType){
         var xAxis = chartGroup.append("text")
             .attr("transform", `translate(${width / 2}, ${height + margin.top + 30})`)
             .attr("class", "aText active")
-            .text("Life Expectancy");
+            .text("Urban Population (%)");
     });
 }
 
 // Default load
-petLifeExpt('dog');
+petUrbanPop('dog');
 // Change dataset on click
 d3.select("#submit").on("click", handleSubmit);

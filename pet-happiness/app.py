@@ -12,38 +12,48 @@ from flask import (
     redirect)
 from sqlalchemy import create_engine
 from flask_sqlalchemy import SQLAlchemy
-# from config import DATABASE_URL, gkey, localHost, localPass
+from config import DATABASE_URL, gkey, localHost, localPass
 
 # Flask setup
 app = Flask(__name__)
 
 # Get keys from environment
-gkey = os.environ['gkey']
-url = os.environ['DATABASE_URL']
+# gkey = os.environ['gkey']
+# url = os.environ['DATABASE_URL']
 
 # Connect to database
-engine = create_engine(url)
-# engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappiness')
+# engine = create_engine(url)
+engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappiness')
 
 # Home Route
 @app.route("/")
 def home():
     return render_template("index.html")
 
-# Ian's graph Route
+# About Project Route
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+# Pet per Capita Route
 @app.route("/pet_per_capita")
-def ian():
+def per_capita():
     return render_template("pet-per-capita.html")
 
-# Mehrun's graph Route
+# Pets vs Life Expectancy graph Route
 @app.route("/pet_life_expectancy")
-def mehrun():
+def life_expectancy():
     return render_template("pet-life-expectancy.html")
 
-# Preeti's graph Route
-@app.route("/preeti")
-def preeti():
-    return render_template("preeti.html")
+# Pets vs GDP graph Route
+@app.route("/pet_GDP")
+def gdp():
+    return render_template("pet-gdp.html")
+
+# Pets vs Urban Population Route
+@app.route("/pet_urban_population")
+def urban_population():
+    return render_template("pet-urban-population.html")
 
 # Read Geojson
 @app.route("/geojson")
