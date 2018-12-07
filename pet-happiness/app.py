@@ -37,18 +37,23 @@ def about():
 
 # Pet per Capita Route
 @app.route("/pet_per_capita")
-def ian():
+def per_capita():
     return render_template("pet-per-capita.html")
 
 # Pets vs Life Expectancy graph Route
 @app.route("/pet_life_expectancy")
-def mehrun():
+def life_expectancy():
     return render_template("pet-life-expectancy.html")
 
 # Pets vs GDP graph Route
 @app.route("/pet_GDP")
-def preeti():
+def gdp():
     return render_template("pet-gdp.html")
+
+# Pets vs Urban Population Route
+@app.route("/pet_urban_population")
+def urban_population():
+    return render_template("pet-urban-population.html")
 
 # Read Geojson
 @app.route("/geojson")

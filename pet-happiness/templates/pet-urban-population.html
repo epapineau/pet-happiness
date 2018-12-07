@@ -30,9 +30,9 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="/pet_per_capita">Pets per Capita</a>
-                            <a class="dropdown-item active" href="/pet_life_expectancy">Pets vs. Life Expectancy<span class="sr-only">(current)</span></a>
+                            <a class="dropdown-item" href="/pet_life_expectancy">Pets vs. Life Expectancy</a>
                             <a class="dropdown-item" href="/pet_GDP">Pets vs. GDP</a>
-                            <a class="dropdown-item" href="/pet_urban_population">Pets vs. Urban Population</a>
+                            <a class="dropdown-item active" href="/pet_urban_population">Pets vs. Urban Population<span class="sr-only">(current)</span></a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -61,7 +61,7 @@
         </div>
         
         <!-- Begin content -->
-        <h4 class="text-dark text-center">Pet Populations and Life Expectancy</h4>
+        <h4 class="text-dark text-center">Pet Populations and Urban Population Percentage</h4>
         <div class="row d-flex justify-content-center">
             <div class="col-3">
                 <form class="form-inline">
@@ -79,7 +79,7 @@
         </div>
         <div class="row d-flex justify-content-center">
             <div class="col-8">
-                <div id="life-expectancy">
+                <div id="urban-population">
 
                 </div>
             </div>
@@ -101,6 +101,6 @@
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='js/pet_life_expectancy.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pet_urban_population.js') }}"></script>
 </body>
 </html>
