@@ -30,17 +30,22 @@ engine = create_engine(f'postgresql://{localHost}:{localPass}@localhost/pethappi
 def home():
     return render_template("index.html")
 
-# Ian's graph Route
+# About Project Route
+@app.route("/about")
+def about():
+    return render_template("about.html")
+
+# Pet per Capita Route
 @app.route("/pet_per_capita")
 def ian():
     return render_template("pet-per-capita.html")
 
-# Mehrun's graph Route
+# Pets vs Life Expectancy graph Route
 @app.route("/pet_life_expectancy")
 def mehrun():
     return render_template("pet-life-expectancy.html")
 
-# Preeti's graph Route
+# Pets vs GDP graph Route
 @app.route("/pet_GDP")
 def preeti():
     return render_template("pet-gdp.html")

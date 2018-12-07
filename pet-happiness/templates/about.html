@@ -6,8 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Pet Happiness</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="../static/css/style.css">
+    <!-- <link rel="stylesheet" href="../static/css/style.css"> -->
 </head>
 <body>
     <div class = "container mt-5">
@@ -18,11 +19,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link text-light" href="/"><b>Home</b><span class="sr-only">(current)</span></a>
-                    </li>
                     <li class="nav-item">
-                        <a class="nav-link text-light" href="/about">About</a>
+                        <a class="nav-link text-light" href="/"><b>Home</b></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link text-light" href="/about">About<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -38,7 +39,7 @@
                         <a class="nav-link text-light" href="/survey_mapped">Our Pet Survey</a>
                     </li>
                     <li class="nav-item">
-                            <a class="nav-link text-light" href="/send">Add Pet Data</a>
+                        <a class="nav-link text-light" href="/send">Add Pet Data</a>
                     </li>
                 </ul>
             </div>
@@ -58,46 +59,18 @@
                 </div>
             </div>  <!-- End image banner -->
         </div>
-
-        <div class = "container my-5">
-            <!-- Begin Form class -->
-            <div class="card bg-light mx-auto w-75">
-                <div class="card-header"><h5>Pet Population Survey</h5></div>
-                <div class="card-body">
-                    <h6 class="card-title">Please help us visualize global pet populations.</h6>
-                    <p class="card-text">
-                        <form method = "POST" action = "/send" role = "form" name = "petform">
-                            <div class="form-group px-2">
-                                <label for="inputType">Type of Pet</label>
-                                <select class="custom-select" id="inputType" name = "petType">
-                                    <option selected value="1">Dog</option>
-                                    <option value="2">Cat</option>
-                                    <option value="3">Bird</option>
-                                    <option value="4">Fish</option>
-                                </select>
-                            </div>
-                            <div class="form-group px-2">
-                                <label for="inputName">Pet Name</label>
-                                <input type="text" class="form-control" id="inputName" name="petName" placeholder="Fluffy">
-                            </div>
-                            <div class="form-group px-2">
-                                <label for="inputCity">City</label>
-                                <input type="text" class="form-control" id="inputCity" name="petCity" placeholder="Chicago">
-                            </div>
-                            <div class="form-group px-2">
-                                <label for="inputCountry">Country</label>
-                                <select class="custom-select" id="inputCountry" name="petCountry">
-                                    <!-- D3 country drop down -->
-                                </select>
-                            </div>
-                            <div class="form-group px-2">
-                                <input type="submit" value="submit" class="btn btn-default">
-                            </div>
-                        </form>
-                    </p>
-                </div>
-            </div>  <!-- End Card Class-->
-        </div>  <!-- End container -->
+        
+        
+        <h4 class="text-dark text-center">Pets & Happiness</h4>
+        <div class="row d-flex justify-content-center">
+            <div class="col-8">
+                <p>This project was meant to focus on an extremely important and serious topic. You probably have been waiting for years for a study as serious and as impactful as this one, so hold on and get ready.</p>                
+                <p>Due to extremely high prices for content, our data was limited to the top 20 countries by dog, cat, fish and bird ownership.  The World Bank provided extensive data sets which were used in this project to determine vital ratios like the dog to human ratio by country.  Pandas allowed for straightforward data manipulation which was then plotted.  Under the Population Anlaysis tab, users can select the Pets Per Capita page which contains graphics comparing the pet:human ratio (x axis) to the country's national happiness score (y axis).</p>
+                <p>Pets to GDP is another under studied topic that many economists have neglected over the past centuries.  Surprisingly, there was little visible correllation between economic output and total numbers of pets owned by country.</p>
+                <p>While many medical experts focus on lifesaving drugs, they often fail to suggest that their patients adopt a pet.  Noticeable correllation was observed when comparing pet populations to life expectancy.   Coincidence?  We think not.</p>
+                <p>Due to limited available data, a feature to collect pet information was also created.   It allows users to input their pet's location, species and name.  The data collected on the website is then put into a postgresql database and plotted on a map.</p>
+            </div>
+        </div>
     </div>
 
     <div class="container">
@@ -111,10 +84,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.5.0/d3.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script> -->
+    <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA==" crossorigin=""></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='js/generate_country_list.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>
-
